@@ -4,14 +4,15 @@
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
-static const char *fonts[]          = { "monospace:size=9", "Symbols Nerd Font:pixelsize=14" };
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 1;        /* 0 means bottom bar */
+static const char *fonts[]          = { "monospace:size=9", "Symbols Nerd Font:pixelsize=16" };
 static const char dmenufont[]       = "monospace:size=9";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -32,9 +33,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",      NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "Firefox",   NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "Alacritty", NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,        NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -109,12 +112,13 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-  { 0, XF86XK_MonBrightnessUp,	spawn,		{.v = (const char*[]){ "changebrightness", "up", NULL } } },
-	{ 0, XF86XK_MonBrightnessDown,	spawn,	{.v = (const char*[]){ "changebrightness", "down", NULL } } },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		{.v = (const char*[]){ "changevolume", "down", NULL } } },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		{.v = (const char*[]){ "changevolume", "up", NULL } } },
-	{ 0, XF86XK_AudioMute,	spawn,		      {.v = (const char*[]){ "changevolume", "mute", NULL } } },
+	{ MODKEY|ControlMask,           XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){ "sysact", NULL } } },
+  { 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("changebrightness up; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,	SHCMD("changebrightness down; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("changevolume up; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("changevolume down; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMute,	spawn,		      SHCMD("changevolume mute; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioMicMute,	spawn,		    {.v = (const char*[]){ "amixer", "set", "Capture", "toggle", NULL } } },
 	{ 0, XF86XK_Display,	spawn,    		    {.v = (const char*[]){ "slock", NULL } } },
 };
