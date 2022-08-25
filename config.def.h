@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 12;        /* gaps between windows */
+static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -120,7 +120,7 @@ static const Key keys[] = {
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("changevolume down; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioMute,	spawn,		      SHCMD("changevolume mute; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioMicMute,	spawn,		    {.v = (const char*[]){ "amixer", "set", "Capture", "toggle", NULL } } },
-	{ 0, XF86XK_Display,	spawn,    		    {.v = (const char*[]){ "slock", NULL } } },
+	{ 0, XF86XK_Display,	spawn,    		    {.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } }
 };
 
 /* button definitions */
