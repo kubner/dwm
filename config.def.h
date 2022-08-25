@@ -70,6 +70,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "alacritty", NULL };
 
 #include <X11/XF86keysym.h>
+#include "shiftview.c"
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -94,15 +95,17 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_l,      shiftview,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_h,      shiftview,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
-	{ MODKEY,			                  XK_e,           spawn,		      SHCMD("pcmanfm") },
-	{ MODKEY,			                  XK_w,           spawn,		      SHCMD("$BROWSER") },
-	{ MODKEY,			                  XK_Print,       spawn,		      SHCMD("maim ~/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
-	{ MODKEY|ShiftMask,			        XK_Print,       spawn,		      SHCMD("maim -s ~/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
+	{ MODKEY,			                  XK_e,      spawn,		      SHCMD("pcmanfm") },
+	{ MODKEY,			                  XK_w,      spawn,		      SHCMD("$BROWSER") },
+	{ MODKEY,			                  XK_Print,  spawn,		      SHCMD("maim ~/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
+	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		      SHCMD("maim -s ~/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -114,13 +117,13 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ControlMask,           XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){ "sysact", NULL } } },
-  { 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("changebrightness up; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_MonBrightnessDown,	spawn,	SHCMD("changebrightness down; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("changevolume up; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("changevolume down; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioMute,	spawn,		      SHCMD("changevolume mute; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioMicMute,	spawn,		    {.v = (const char*[]){ "amixer", "set", "Capture", "toggle", NULL } } },
-	{ 0, XF86XK_Display,	spawn,    		    {.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } }
+  { 0, XF86XK_MonBrightnessUp,	spawn,		   SHCMD("changebrightness up; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,	   SHCMD("changebrightness down; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		   SHCMD("changevolume up; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		   SHCMD("changevolume down; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMute,	spawn,		         SHCMD("changevolume mute; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMicMute,	spawn,		       {.v = (const char*[]){ "amixer", "set", "Capture", "toggle", NULL } } },
+	{ 0, XF86XK_Display,	spawn,    		       {.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } }
 };
 
 /* button definitions */
