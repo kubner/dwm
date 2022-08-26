@@ -5,3 +5,4 @@ dwm
 dwm.o
 util.o
 config.h
+patches
