@@ -18,7 +18,7 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#274e5e";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -103,6 +103,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	{ MODKEY,			                  XK_e,      spawn,		      SHCMD("pcmanfm") },
+	{ MODKEY,			                  XK_r,      spawn,		      SHCMD("$TERMINAL -e lfub") },
 	{ MODKEY,			                  XK_w,      spawn,		      SHCMD("$BROWSER") },
 	{ MODKEY,			                  XK_Print,  spawn,		      SHCMD("maim ~/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
 	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		      SHCMD("maim -s ~/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
