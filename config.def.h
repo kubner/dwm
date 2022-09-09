@@ -108,8 +108,8 @@ static const Key keys[] = {
 	{ MODKEY,			                  XK_e,      spawn,		      SHCMD("pcmanfm") },
 	{ MODKEY,			                  XK_r,      spawn,		      SHCMD("$TERMINAL -e lfub") },
 	{ MODKEY,			                  XK_w,      spawn,		      SHCMD("$BROWSER") },
-	{ MODKEY,			                  XK_Print,  spawn,		      SHCMD("maim ~/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
-	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		      SHCMD("maim -s ~/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
+	{ MODKEY,			                  XK_Print,  spawn,		      SHCMD("maim ~/pix/screenshots/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
+	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		      SHCMD("maim -s | xclip -selection clipboard -t image/png") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
