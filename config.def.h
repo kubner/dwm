@@ -2,8 +2,12 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 10};
 static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 4;   /* systray spacing */
@@ -12,13 +16,13 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=9", "NotoColorEmoji:size=9:antialias=true:autohint=true", "Source Han Sans:size=9" };
+static const char *fonts[]          = { "monospace:size=9", "Symbols Nerd Font:size=9", "NotoColorEmoji:size=9:antialias=true:autohint=true", "Source Han Sans:size=9" };
 static const char dmenufont[]       = "monospace:size=9";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#346246";
+static const char col_cyan[]        = "#5d5447";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -85,6 +89,14 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_equal,  incrgaps,       {.i = +1 } },
+	{ MODKEY,                       XK_minus,  incrgaps,       {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_equal,  incrogaps,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_minus,  incrogaps,      {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_equal,  incrigaps,      {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_minus,  incrigaps,      {.i = -1 } },
+	{ MODKEY,                       XK_g,      togglegaps,     {0} },
+	{ MODKEY|ControlMask,           XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -101,10 +113,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,      shiftview,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = GAP_RESET } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = GAP_TOGGLE} },
 	{ MODKEY,			                  XK_e,      spawn,		      SHCMD("pcmanfm") },
 	{ MODKEY,			                  XK_r,      spawn,		      SHCMD("$TERMINAL -e lfub") },
 	{ MODKEY,			                  XK_w,      spawn,		      SHCMD("$BROWSER") },
