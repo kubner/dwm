@@ -1,5 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 
+/* Constants */
+#define TERMINAL "st"
+#define BROWSER "brave"
+
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -22,11 +26,11 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#5d5447";
+static const char col_primary[]     = "#346346";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray4, col_primary,  col_primary  },
 };
 
 /* tagging */
@@ -69,7 +73,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_primary, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
@@ -113,11 +117,12 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,      shiftview,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,			                  XK_e,      spawn,		      SHCMD("pcmanfm") },
-	{ MODKEY,			                  XK_r,      spawn,		      SHCMD("$TERMINAL -e lfub") },
-	{ MODKEY,			                  XK_w,      spawn,		      SHCMD("$BROWSER") },
-	{ MODKEY,			                  XK_Print,  spawn,		      SHCMD("maim ~/pix/screenshots/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
-	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		      SHCMD("maim -s | xclip -selection clipboard -t image/png") },
+	{ MODKEY,		                    XK_e,		   spawn,	       	 {.v = (const char*[]){ "pcmanfm", NULL } } },
+	{ MODKEY|ShiftMask,		          XK_p,		   spawn,	       	 {.v = (const char*[]){ "passmenu", NULL } } },
+	{ MODKEY,		                  	XK_r,	     spawn,		       {.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
+	{ MODKEY,	                  		XK_w,		   spawn,	       	 {.v = (const char*[]){ BROWSER, NULL } } },
+	{ MODKEY,			                  XK_Print,  spawn,		       SHCMD("maim ~/pix/screenshots/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
+	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		       SHCMD("maim -s | xclip -selection clipboard -t image/png") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -129,13 +134,13 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ControlMask,           XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){ "sysact", NULL } } },
-  { 0, XF86XK_MonBrightnessUp,	spawn,		   SHCMD("changebrightness up; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_MonBrightnessDown,	spawn,	   SHCMD("changebrightness down; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		   SHCMD("changevolume up; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		   SHCMD("changevolume down; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioMute,	spawn,		         SHCMD("changevolume mute; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioMicMute,	spawn,		       {.v = (const char*[]){ "amixer", "set", "Capture", "toggle", NULL } } },
-	{ 0, XF86XK_Display,	spawn,    		       {.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } }
+  { 0, XF86XK_MonBrightnessUp,	             spawn,		       SHCMD("changebrightness up; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessDown,	           spawn,	         SHCMD("changebrightness down; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	             spawn,		       SHCMD("changevolume up; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,            	 spawn,		       SHCMD("changevolume down; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMute,	                   spawn,		       SHCMD("changevolume mute; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMicMute,	                 spawn,		       SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+	{ 0, XF86XK_Display,	                     spawn,    		   {.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } }
 };
 
 /* button definitions */
