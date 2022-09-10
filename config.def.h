@@ -1,9 +1,5 @@
 /* See LICENSE file for copyright and license details. */
 
-/* Constants */
-#define TERMINAL "st"
-#define BROWSER "brave"
-
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -119,8 +115,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,		                    XK_e,		   spawn,	       	 {.v = (const char*[]){ "pcmanfm", NULL } } },
 	{ MODKEY|ShiftMask,		          XK_p,		   spawn,	       	 {.v = (const char*[]){ "passmenu", NULL } } },
-	{ MODKEY,		                  	XK_r,	     spawn,		       {.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
-	{ MODKEY,	                  		XK_w,		   spawn,	       	 {.v = (const char*[]){ BROWSER, NULL } } },
+	{ MODKEY,		                  	XK_r,	     spawn,		       {.v = (const char*[]){ "st", "-e", "lfub", NULL } } },
+	{ MODKEY,	                  		XK_w,		   spawn,	       	 {.v = (const char*[]){ "brave", NULL } } },
 	{ MODKEY,			                  XK_Print,  spawn,		       SHCMD("maim ~/pix/screenshots/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
 	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		       SHCMD("maim -s | xclip -selection clipboard -t image/png") },
 	TAGKEYS(                        XK_1,                      0)
