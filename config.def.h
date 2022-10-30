@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 8;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 8;       /* vert inner gap between windows */
@@ -19,15 +19,16 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=9", "SymbolsNerdFont:size=9", "NotoColorEmoji:size=9:antialias=true:autohint=true", "SourceHanSans:size=9" };
 static const char dmenufont[]       = "monospace:size=9";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_primary[]     = "#2c4d62";
-static const char *colors[][3]      = {
+static const char normbgcolor[]       = "#000000";
+static const char normbordercolor[]   = "#444444";
+static const char normfgcolor[]       = "#bbbbbb";
+static const char selfgcolor[]        = "#eeeeee";
+static const char selbgcolor[]        = "#222222";
+static const char selbordercolor[]    = "#aaaaaa";
+static const char *colors[][3]        = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_primary, col_primary  },
+	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+	[SchemeSel]  = { selfgcolor, selbgcolor,  selbordercolor  },
 };
 
 /* tagging */
@@ -70,7 +71,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_primary, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 #include <X11/XF86keysym.h>
@@ -110,7 +111,7 @@ static const Key keys[] = {
 	{ MODKEY,		                    XK_e,		   spawn,	       	 {.v = (const char*[]){ "pcmanfm", NULL } } },
 	{ MODKEY|ShiftMask,		          XK_p,		   spawn,	       	 {.v = (const char*[]){ "passmenu", NULL } } },
 	{ MODKEY,		                  	XK_r,	     spawn,		       {.v = (const char*[]){ "st", "-e", "lfub", NULL } } },
-	{ MODKEY,	                  		XK_w,		   spawn,	       	 {.v = (const char*[]){ "brave", NULL } } },
+	{ MODKEY,	                  		XK_w,		   spawn,	       	 {.v = (const char*[]){ "firefox", NULL } } },
 	{ MODKEY,			                  XK_Print,  spawn,		       SHCMD("maim ~/pix/screenshots/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
 	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		       SHCMD("maim -s | xclip -selection clipboard -t image/png") },
 	TAGKEYS(                        XK_1,                      0)
