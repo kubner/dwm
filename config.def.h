@@ -3,10 +3,10 @@
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 14;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 12;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 8;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 8;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 11;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 11;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -17,19 +17,20 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=9", "SymbolsNerdFont:pixelsize=17", "NotoColorEmoji:size=9:antialias=true:autohint=true", "SourceHanSans:size=9" };
+static const char *fonts[]          = { "monospace:size=9", "SymbolsNerdFont:pixelsize=16", "NotoColorEmoji:size=9:antialias=true:autohint=true", "SourceHanSans:size=9" };
 static const char dmenufont[]       = "monospace:size=9";
-static const char normbgcolor[]       = "#0d0c0d";
-static const char normbordercolor[]   = "#444444";
-static const char normfgcolor[]       = "#bbbbbb";
-static const char selfgcolor[]        = "#eeeeee";
-static const char selbgcolor[]        = "#414041";
-static const char selbordercolor[]    = "#666666";
-static const char *colors[][3]        = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-	[SchemeSel]  = { selfgcolor, selbgcolor,  selbordercolor  },
-};
+// static const char normbgcolor[]       = "#222222";
+// static const char normbordercolor[]   = "#444444";
+// static const char normfgcolor[]       = "#bbbbbb";
+// static const char selfgcolor[]        = "#eeeeee";
+// static const char selbgcolor[]        = "#005577";
+// static const char selbordercolor[]    = "#005577";
+// static const char *colors[][3]        = {
+// 	/*               fg         bg         border   */
+// 	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+// 	[SchemeSel]  = { selfgcolor, selbgcolor,  selbordercolor  },
+// };
+#include "/home/kub/.cache/wal/colors-wal-dwm.h"
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -43,6 +44,7 @@ static const Rule rules[] = {
 	{ "Gimp",      NULL,     NULL,           0,         1,          0,           0,        -1 },
 	{ "Firefox",   NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "st",        NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "mpv",       NULL,     NULL,           0,         0,          0,           1,        -1 },
 	{ NULL,        NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
@@ -113,6 +115,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,		          XK_p,		   spawn,	       	 {.v = (const char*[]){ "passmenu", NULL } } },
 	{ MODKEY,		                  	XK_r,	     spawn,		       {.v = (const char*[]){ "st", "-e", "lfub", NULL } } },
 	{ MODKEY,	                  		XK_w,		   spawn,	       	 {.v = (const char*[]){ "firefox", NULL } } },
+	{ MODKEY,                 			XK_n,		   spawn,		       {.v = (const char*[]){ "st", "-e", "ncmpcpp", NULL } } },
 	{ MODKEY,			                  XK_Print,  spawn,		       SHCMD("maim ~/pix/screenshots/screenshot_$(date +%Y_%m_%d_%H-%M-%S).png") },
 	{ MODKEY|ShiftMask,			        XK_Print,  spawn,		       SHCMD("maim -s | xclip -selection clipboard -t image/png") },
 	TAGKEYS(                        XK_1,                      0)
@@ -151,3 +154,4 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
+
